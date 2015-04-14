@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3JS Samples</title>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<h1>Bar Chart</h1>
+	<div id="bar_chart">
+		
+	</div>
+	<div>
+		<p>D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.</p>
+		<p>D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation. D3’s functional style allows code reuse through a diverse collection of components and plugins.
+		</p> 
+		<p class="new_data">
+			D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction.
+		</p>
+		<form>
+			Name<input type="text" name="text" value="Simi">
+		</form>
+		<table class="numbers">
+			 
+		</table>
+	</div>
+
+	<div id ="myCanvas">
+		 
+	</div>
+
+
+	<script>
+		d3.select("body")
+		  .style("background-color", "white");
+	 	d3.selectAll("p")
+	 	  .style("color", function() {
+  			return "hsl(" + Math.random() * 360 + ",100%,50%)";
+		});
+		// d3.selectAll("p").style("color", function(d, i) {
+		//   return i % 2 ? "#fff" : "#eee";
+		// });
+		// d3.select("body").selectAll("p")
+	 //    .data([4, 8, 15, 16, 23, 42])
+	 //  	.enter().append("p")
+	 //    .text(function(d) { return "I’m number " + d + "!"; });
+	 d3.select("p.new_data")
+	   .text("This is random data");
+	 d3.select("body")
+	   .append("p.another_data")
+	   .style('color','red')
+	   .text("this is a new para");
+
+    var numbers = [4, 8, 15, 16, 23, 42,89,90,78];
+	d3.select('table.numbers')
+	  .style('border',"2px solid black");
+	d3.select("table.numbers")
+    .data(numbers)
+    .enter().append("tr")
+    .text(function(d) { 
+    	return "I’m number " + d + "!"; 
+    });
+  var name =d3.select('input').attr('value');
+  console.log(name);
+  d3.select('form').append('p').text("hello !!! " + name);
+
+ 	var canvas = d3.select("div#myCanvas")
+ 	               .append("svg")
+ 	               .attr("width",500)
+ 	               .attr("height",500);
+ 	var circle = canvas.append("circle")
+ 										 .attr("cx",250)
+ 										 .attr("cy",250)
+ 										 .attr("r",100)
+ 										 .attr("fill","red");
+
+
+ var get_color =function(){
+ 		 return Math.floor(Math.random()*255); 
+ }
+ var data 	= [ ];
+ var  change_data =function(){
+	 	for (var i = 0; i < 10; i++) {
+	 	   data[i] =  Math.floor(Math.random()*500); 
+	 	   //console.log(data[i]);
+	  };
+ }
+ var max_data_width 		 =  Math.max(data);
+ var max_canvas_width 	 =  500;
+ var max_canvas_height	 =  500;
+
+ var height_scale = d3.scale.linear()
+ 										 .domain([0,max_data_width])
+ 										 .range([0,max_canvas_width]);
+
+ var canvas_bar = d3.select('#bar_chart')
+                     .append("svg")
+                     .attr("width" ,max_canvas_width)
+ 	              		 .attr("height",max_canvas_height);
+ // var bar_chart  = canvas_bar.selectAll('rec')
+ //                            .data(data)
+ //                            .enter()
+ //                            	 .append("rect")
+ //                            	 .attr("width",10)
+ //                            	 .attr("height",function(d){return d;})
+ //                            	 .attr("x",function(d,i){return i*40;})
+ //                            	 .attr("y",150)
+ //                            	 .attr("style","fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)");
+
+ console.log("da------------------ta"+data[0]);
+ var bar_chart  = canvas_bar.selectAll('rec')
+                            .data(data)
+                            .enter()
+                            	 .append("rect")
+                            	 .attr("width",function(d){return height_scale(d);})
+                            	 .attr("height",10)
+                            	 .attr("x",0)
+                            	 .attr("y",function(d,i){return i*40;})
+                            	 .attr("style","fill:rgb("+get_color()+","
+                            	 	                	+get_color()+","
+                            	 	                	+get_color()+")" );
+
+
+   
+   setInterval(change_data(),800);
+  
+	</script>
+</body>
+</html>

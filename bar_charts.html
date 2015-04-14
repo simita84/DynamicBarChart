@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D3JS Samples</title>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<style type="text/css">
+			.bar_chart{
+				background-color: orange;
+				padding:10px; 
+			}
+			.bar_chart div{
+					background-color: blue;
+					border: 2px solid black;
+					margin: 5px;
+					color: white;
+					/*display: inline-block;
+					vertical-align: top;*/
+			}
+	</style>
+</head>
+<body>
+	<h1>Bar Chart</h1>
+	<div class="bar_chart">
+	</div>
+	<script>
+  //reference:  http://bost.ocks.org/mike/bar/
+		 function Bars () {
+		 // var height_scale = d3.scale.linear()
+		 // 										 .domain([0,max_data_width])
+		 // 										 .range([0,max_canvas_width])
+
+		 // this.get_color =function(){
+		 // 		 return Math.floor(Math.random()*255); 
+		 // }
+		  // var max_data_width 		 =  500;
+		 	//  var max_canvas_width 	 =  500;
+		 	//  var max_canvas_height	 =  500;		 	 
+			 // var canvas_bar  = d3.select('#bar_chart')
+				//                      .append("svg")
+				//                      .attr("width" ,max_canvas_width)
+				//  	              		 .attr("height",max_canvas_height);
+		 	 			  
+		 this.refresh_data = function()
+		 {
+		 	 this.data =[];		
+		 	 d3.select('.bar_chart').selectAll('div').remove();
+			 
+			 for (var i = 0; i < 10; i++) {
+			 	   this.data[i] =  Math.floor(Math.random()*500); 
+			  };
+			   
+        //console.log(this.data);           		 
+			  this.bar_chart   = d3.select('.bar_chart')
+			  						.selectAll('div')		
+					                .data(this.data)
+					                .enter()
+		                            	 .append("div")
+		                            	 //.attr("width",function(d){return height_scale(d);})
+		                            	 .style("width",function(d){ return d + "px"; })//"5px")
+		                            	 .style("height","15px")//function(d){ return d + "px"; })
+		                            	 .text(function(d) { return d; });
+		 		}
+  // var bar_chart  = canvas_bar.selectAll('rec')
+		 //                            .data(data)
+		 //                            .enter()
+		 //                            	 .append("rect")
+		 //                            	 .attr("width",10)
+		 //                            	 .attr("height",function(d){return d;})
+		 //                            	 .attr("x",function(d,i){return i*40;})
+		 //                            	 .attr("y",150)
+		 //                            	 .attr("style","fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)");
+ //canvas_bar.selectAll('rec').exit();
+ }
+  
+ setInterval( new Bars().refresh_data,1000);
+ 
+	</script>
+</body>
+</html>
